@@ -133,7 +133,7 @@ class LeftTabWidget(QWidget):
 
     def favoriteListWidgetDBClicked(self, item):
         for path in self.favorite_pdf_path_list:
-            if item.text() in path:
+            if item.text() in path and item.text() == path[-len(item.text())-4:-4]:
                 if(os.path.exists(path)):
                     self.pdfWrapper.changePDF(path)
                     self.path_now = path
@@ -141,7 +141,7 @@ class LeftTabWidget(QWidget):
 
     def localListWidgetDBClicked(self, item):
         for path in self.local_pdf_path_list:
-            if item.text() in path:
+            if item.text() in path and item.text() == path[-len(item.text())-4:-4]:
                 self.pdfWrapper.changePDF(path)
                 self.path_now = path
                 return
