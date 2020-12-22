@@ -21,35 +21,35 @@ class LeftTabWidget(QWidget):
         self.button_layout = QVBoxLayout(self.left_widget)
 
         self.open_file_button = QPushButton(
-            qtawesome.icon('fa5s.file-pdf', color='red'), '')
+            qtawesome.icon('fa5s.file-pdf', color='DarkGray'), '')
         self.button_layout.addWidget(self.open_file_button)
 
         self.open_foder_button = QPushButton(
-            qtawesome.icon('fa5s.folder-open', color='red'), '')
+            qtawesome.icon('fa5s.folder-open', color='DarkGray'), '')
         self.button_layout.addWidget(self.open_foder_button)
 
         self.hide_button = QPushButton(
-            qtawesome.icon('fa5s.exchange-alt', color='red'), '')
+            qtawesome.icon('fa5s.exchange-alt', color='DarkGray'), '')
         self.button_layout.addWidget(self.hide_button)
 
         self.add_button = QPushButton(
-            qtawesome.icon('fa5s.bookmark', color='red'), '')
+            qtawesome.icon('fa5s.bookmark', color='DarkGray'), '')
         self.button_layout.addWidget(self.add_button)
 
         self.remove_button = QPushButton(
-            qtawesome.icon('fa5.bookmark', color='red'), '')
+            qtawesome.icon('fa5.bookmark', color='DarkGray'), '')
         self.button_layout.addWidget(self.remove_button)
 
         self.local_pdf = QPushButton(
-            qtawesome.icon('fa5s.list-ul', color='red'), '')
+            qtawesome.icon('fa5s.list-ul', color='DarkGray'), '')
         self.button_layout.addWidget(self.local_pdf)
 
         self.favorite_pdf = QPushButton(
-            qtawesome.icon('fa5s.th-list', color='red'), '')
+            qtawesome.icon('fa5s.th-list', color='DarkGray'), '')
         self.button_layout.addWidget(self.favorite_pdf)
 
         self.pushButton3 = QPushButton(
-            qtawesome.icon('fa5s.question', color='red'), '')
+            qtawesome.icon('fa5s.question', color='DarkGray'), '')
         self.button_layout.addWidget(self.pushButton3)
 
         # stacked_widget as the right widget
@@ -57,6 +57,8 @@ class LeftTabWidget(QWidget):
         self.main_layout.addWidget(self.stacked_widget)
         # resize the stacked_widget
         self.stacked_widget.setMinimumWidth(250)
+        # self.left_widget.setMaximumWidth(50)
+
 
         # Local PDF
         self.local_pdf_path_list, self.local_pdf_name_list = list(
