@@ -16,6 +16,7 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QUrl, pyqtSignal, QEvent, Qt
 import platform
+
 sysstr = platform.system()
 is_win = is_linux = is_mac = False
 
@@ -27,9 +28,7 @@ elif sysstr == "Linux":
 elif sysstr == "Mac":
     is_mac = True
 
-
 print('System: %s' % sysstr)
-
 
 MAX_CHARACTERS = 5000
 
@@ -40,10 +39,10 @@ class WebView(QWebEngineView):
         super(WebView, self).__init__()
         self._glwidget = None
         self.pdf_js_path = "file:///" + \
-            os.path.join(os.getcwd(), "pdfjs", "web", "viewer.html")
+                           os.path.join(os.getcwd(), "pdfjs", "web", "viewer.html")
         if pdf_path is None:
             pdf_path = "file:///" + \
-                os.path.join(os.getcwd(), "sample", "sample.pdf")
+                       os.path.join(os.getcwd(), "sample", "sample.pdf")
         if sys.platform == "win32":
             self.pdf_js_path = self.pdf_js_path.replace('\\', '/')
             pdf_path = pdf_path.replace('\\', '/')
@@ -130,12 +129,14 @@ class MainWindow(QMainWindow):
         self.thread_my.start()
         self.setWindowIcon(QIcon('reader.png'))
         self.setWindowTitle("英文PDF阅读器")
-        self.translate_ori = QPlainTextEdit()
 
+        self.translate_ori = QPlainTextEdit()
         self.translate_ori.setStyleSheet("font: 12pt Roboto")
+        self.translate_ori.setStyleSheet("background-color:#282828;")  # 文本框内颜色
 
         self.translate_res = QPlainTextEdit()
         self.translate_res.setStyleSheet("font: 12pt Roboto")
+        self.translate_res.setStyleSheet("background-color:#282828;")  # 文本框内颜色
 
         self.selectable_text_size = [
             '8', '9', '10', '11', '12', '13', '14', '15', ]
@@ -143,14 +144,24 @@ class MainWindow(QMainWindow):
         self.text_size_combobox_ori = QComboBox()
         self.text_size_combobox_ori.addItems(self.selectable_text_size)
         self.text_size_combobox_ori.setCurrentIndex(4)
+        self.text_size_combobox_ori.setStyleSheet(
+            "background-color:qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #494949, stop:1 #3f3f3f);"
+            "selection-background-color: #282828;"
+            "border:1px solid #282828")
 
         self.text_size_combobox_res = QComboBox()
         self.text_size_combobox_res.addItems(self.selectable_text_size)
         self.text_size_combobox_res.setCurrentIndex(4)
+        self.text_size_combobox_res.setStyleSheet(
+            "background-color:qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #494949, stop:1 #3f3f3f);"
+            "selection-background-color: #282828;"
+            "border:1px solid #282828")
 
         label1 = QLabel('字体大小:')
+        label1.setStyleSheet("background:transparent;")
         label1.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         label2 = QLabel('字体大小:')
+        label2.setStyleSheet("background:transparent;")
         label2.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
         oriHboxLayout = QHBoxLayout()
@@ -160,6 +171,7 @@ class MainWindow(QMainWindow):
         oriHboxLayout.setStretch(0, 6)
         oriHboxLayout.setStretch(1, 3)
         oriHboxLayout.setStretch(2, 3)
+        oriHboxLayout.setContentsMargins(0, 11, 0, 0)
         oriWidget = QWidget()
         oriWidget.setLayout(oriHboxLayout)
 
@@ -170,6 +182,7 @@ class MainWindow(QMainWindow):
         resHboxLayout.setStretch(0, 6)
         resHboxLayout.setStretch(1, 3)
         resHboxLayout.setStretch(2, 3)
+        resHboxLayout.setContentsMargins(0, 0, 0, 0)
         resWidget = QWidget()
         resWidget.setLayout(resHboxLayout)
 
@@ -179,10 +192,14 @@ class MainWindow(QMainWindow):
         vbox.addWidget(self.translate_ori)
         vbox.addWidget(resWidget)
         vbox.addWidget(self.translate_res)
+        vbox.setContentsMargins(0, 0, 0, 0)
+        # vbox.setMargin(0)
 
-        gbox = QGroupBox()
+        gbox = QGroupBox('翻译')
         gbox.setStyleSheet("font: 12pt Roboto")
         gbox.setLayout(vbox)
+        gbox.setStyleSheet(
+            "background-color:qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #404040, stop:1 #3f3f3f);")  # 右边框架颜色
 
         self.pdfWrapper = WebView()
         self.left_tab_widget = LeftTabWidget(self.pdfWrapper)
@@ -197,6 +214,7 @@ class MainWindow(QMainWindow):
 
         widget = QWidget()
         widget.setLayout(hBoxLayout)
+        widget.setStyleSheet("background-color:#282828;")  # 主框架背景颜色
         self.setCentralWidget(widget)
         self.recent_text = ""
         self.showMaximized()
@@ -239,10 +257,12 @@ class MainWindow(QMainWindow):
 
     def updateOriTextSizeByIndexChanged(self, index):
         self.translate_ori.setStyleSheet(
+            "background-color:#282828;"
             "font: {0}pt Roboto".format(self.selectable_text_size[index]))
 
     def updateResTextSizeByIndexChanged(self, index):
         self.translate_res.setStyleSheet(
+            "background-color:#282828;"
             "font: {0}pt Roboto".format(self.selectable_text_size[index]))
 
     def closeEvent(self, event):
